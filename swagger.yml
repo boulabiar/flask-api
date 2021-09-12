@@ -1,0 +1,125 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Streamers REST
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api/v1"
+
+paths:
+  /streamers:
+    get:
+      operationId: "streamers.read_all"
+      tags:
+        - "Streamers"
+      summary: "The Streamers"
+      description: "Read the list of streamers"
+      responses:
+        200:
+          description: "Successful read streamer list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                platform:
+                  type: "string"
+                username:
+                  type: "string"
+                streamUrl:
+                  type: "string"
+                profilePictureUrl:
+                  type: "string"
+                timestamp:
+                  type: "string"
+    post:
+      operationId: "streamers.create"
+      tags:
+        - "Streamer"
+      summary: "Create a streamer record"
+      description: "Create a new streamer record"
+      parameters:
+        - name: streamer
+          # Where is the param passed: body, query or path params
+          in: body
+          description: streamer creation
+          required: True
+          schema:
+            type: object
+            properties:
+              platform:
+                type: string
+              username:
+                type: string
+      responses:
+        201:
+          description: Successfully created streamer
+          schema:
+            properties:
+              platform:
+                type: string
+                description: id of the streamer
+              username:
+                type: string
+                description: first name of the streamer
+                  
+
+  /streamers/{platform}:{username}:
+    get:
+      operationId: "streamers.read_one"
+      tags:
+        - "Streamers"
+      summary: "a streamer"
+      description: "get one streamer"
+      parameters:
+        - name: platform
+          in: path
+          description: platform of the user to get
+          type: "string"
+          required: True
+        - name: username
+          in: path
+          description: username to get
+          type: "string"
+          required: True
+      responses:
+        200:
+          description: "Successful read streamer list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                platform:
+                  type: "string"
+                username:
+                  type: "string"
+                streamUrl:
+                  type: "string"
+                profilePictureUrl:
+                  type: "string"
+                timestamp:
+                  type: "string"
+    delete:
+      operationId: "streamers.delete"
+      tags:
+        - Streamers
+      summary: Delete a streamer
+      description: Delete a streamer in the streamers list
+      parameters:
+        - name: platform
+          in: path
+          type: "string"
+          description:  platform of the streamer to delete in the list
+          required: True
+        - name: username
+          in: path
+          type: "string"
+          description: username of the streamer to delete in the list
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a streamer
+                  
